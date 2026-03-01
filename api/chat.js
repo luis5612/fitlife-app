@@ -18,7 +18,6 @@ export default async function handler(req, res) {
 
   let body = req.body;
 
-  // Si Vercel no parsea el body automáticamente, lo parseamos manualmente
   if (typeof body === 'string') {
     try { body = JSON.parse(body); } catch(e) {
       return res.status(400).json({ error: 'Body inválido: ' + e.message });
@@ -59,6 +58,26 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('Proxy error:', err);
-    return res.status(500).json({ error: 'Error interno del servidor: ' + err.message });
+    return res.status(500).json({ error: 'Error interno: ' + err.message });
   }
 }
+```
+
+4. Clic **"Commit changes"**
+
+---
+
+**Luego fuerza un redeploy en Vercel:**
+
+1. Ve a vercel.com → tu proyecto
+2. Pestaña **"Deployments"**
+3. Clic los **3 puntos** del deployment más reciente
+4. Clic **"Redeploy"** → confirma
+
+---
+
+**Comprueba que funcionó:**
+
+Visita en el navegador:
+```
+https://TU-APP.vercel.app/api/chat
